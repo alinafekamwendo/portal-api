@@ -20,10 +20,14 @@ dotenv.config();
 const app = express();
 
 // CORS configuration
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',') 
+  : ['http://localhost:3000'];
+
 app.use(
   cors({
-    origin: "http://localhost:3000", // Replace with your frontend URL
-    credentials: true, // Allow cookies
+    origin: allowedOrigins,
+    credentials: true
   })
 );
 
