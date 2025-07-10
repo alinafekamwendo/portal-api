@@ -15,46 +15,46 @@ const config = require(path.join(__dirname, "../", "config", "config.json"))[
 const db = {};
 
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], {
-    dialect: config.dialect,
-    protocol: config.protocol,
-    dialectOptions: config.dialectOptions,
-    pool: config.pool,
-    logging: config.logging
-  });
-} else {
-  sequelize = new Sequelize(
-    config.database, 
-    config.username, 
-    config.password, 
-    {
-      host: config.host,
-      dialect: config.dialect,
-      logging: config.logging
-    }
-  );
-}
-// sequelize = new Sequelize(
-//   "postgresql://postgres.vzoevdkkjwvfouogmbrj:6d8CrGJ1AwFZR6KM@aws-0-eu-central-1.pooler.supabase.com:5432/postgres",
-//   {
-//     dialect: "postgres",
-//     protocol: "postgres",
-//     dialectOptions: {
-//       ssl: {
-//         require: true,
-//         rejectUnauthorized: false, // For self-signed certificates (Supabase uses SSL)
-//       },
-//       pool: {
-//         max: 5,
-//         min: 0,
-//         acquire: 30000,
-//         idle: 10000
-//       },
-//     },
-//     logging: false, // Disable logging if not needed
-//   }
-// );
+// if (config.use_env_variable) {
+//   sequelize = new Sequelize(process.env[config.use_env_variable], {
+//     dialect: config.dialect,
+//     protocol: config.protocol,
+//     dialectOptions: config.dialectOptions,
+//     pool: config.pool,
+//     logging: config.logging
+//   });
+// } else {
+//   sequelize = new Sequelize(
+//     config.database, 
+//     config.username, 
+//     config.password, 
+//     {
+//       host: config.host,
+//       dialect: config.dialect,
+//       logging: config.logging
+//     }
+//   );
+// }
+sequelize = new Sequelize(
+  "postgresql://postgres.vzoevdkkjwvfouogmbrj:6d8CrGJ1AwFZR6KM@aws-0-eu-central-1.pooler.supabase.com:5432/postgres",
+  {
+    dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // For self-signed certificates (Supabase uses SSL)
+      },
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      },
+    },
+    logging: false, // Disable logging if not needed
+  }
+);
 
 fs.readdirSync(__dirname)
   .filter((file) => {
