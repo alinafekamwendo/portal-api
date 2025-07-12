@@ -34,10 +34,11 @@ const allowedOrigins = [
   'https://chigoneka-school-portal.vercel.app', // Your Vercel frontend
   'http://localhost:3000', // Local dev (optional)
 ];
+const origins = process.env.ALLOWED_URLS || allowedOrigins;
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: origins,
     credentials: true, // Required if using cookies/auth headers
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
     allowedHeaders: ['Content-Type', 'Authorization','ngrok-skip-browser-warning'], // Allowed headers
@@ -158,23 +159,7 @@ async function startServer() {
       console.log(`Server running on port http://localhost:${port}/${apiVersion}`);
       console.log(`GraphQL endpoint: http://localhost:${port}/graphql`);
       console.log(`GraphQL Subscriptions: ws://localhost:${port}/graphql`);
-    try {
-        // Configure ngrok to forward to your server's port
-         ngrok.connect({
-          addr: port, 
-          authtoken_from_env: true, // Make sure NGROK_AUTH_TOKEN is in your .env
-          // You can add more ngrok options here if needed
-          // For example, to expose both http and https:
-          // proto: 'http', // or 'https', 'tcp', 'tls'
-        }).then(listener => console.log(`Ingress established at: ${listener.url()}`));
-      
-        
-        console.log(`ngrok tunnel created at: ${listener.url()}`);
-        console.log('Traffic stats available at http://127.0.0.1:4040');
-      } catch (err) {
-        console.error('ngrok connection error:', err);
-        // Don't exit the process, your server is still running locally
-      }
+  
     });
   }).catch(err => {
     console.error('Failed to connect to DB or sync models:', err);
