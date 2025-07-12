@@ -27,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: { model: "users", key: "id" },
       },
+      isRead: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false // Important to set default value
+      }
     },
     {
       paranoid: true,
